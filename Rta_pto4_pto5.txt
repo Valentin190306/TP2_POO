@@ -1,0 +1,10 @@
+Rta_ej4: el encapsulamiento esta garantizado debido a que las propias clases "Cuenta" realizan 
+las operaciones de cálculo y verificación. La clase Billetera funciona como interfaz, una vez creadas 
+y asignadas las cuentas a la billetera las funciones principales de "ingreso", "pago" y resumen se 
+pueden hacer desde la billetera pero la información se encuentra dentro de los objetos Cuenta. 
+Los métodos que impliquen una "transferencia" de dinero se realizan a traves de los objetos "Transferencia". 
+
+Rta_ej5: las nuevas caracteristicas implementadas no modifican las mecánicas de encapsulamiento
+y contrato ya que las operaciones de inversión de la cuenta corriente solo se realizan dentro de la
+clase "CuentaCorriente".
+
