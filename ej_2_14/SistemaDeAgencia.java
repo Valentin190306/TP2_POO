@@ -119,6 +119,16 @@ public class SistemaDeAgencia {
         return destinoConMayorRepeticion;
     }
 
+    public String resumenDeProveedores () {
+        if (proveedores.isEmpty())
+            return "> Lista de proveedores vacia . . .";
+        StringBuilder retorno = new StringBuilder("> Lista de proveedores : \n");
+        for (Proveedor actual : proveedores) {
+            retorno.append(" - ").append(actual.toString()).append("\n");
+        }
+        return retorno.toString();
+    }
+
     private static class VentasComparator implements Comparator<Venta> {
         @Override
         public int compare (Venta venta1, Venta venta2) {

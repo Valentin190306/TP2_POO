@@ -7,22 +7,25 @@ public class Paquete {
     private String codigo;
     private String nombre;
     private String destino;
-    private Proveedor medioDeTransporte;
-    private Proveedor hospedaje;
-    private List<Proveedor> excursiones;
+    private Transporte medioDeTransporte;
+    private Hospedaje hospedaje;
+    private List<GuiaTuristico> excursiones;
     private Double precio = 0.0;
+    private Double precioFinal;
+    private Integer MaxPaq;
     private static Integer indice = 100;
 
-    public Paquete (String nombre, String destino, Proveedor medioDeTransporte, Proveedor hospedaje, List<Proveedor> excursiones, Double precio) {
+    public Paquete (String nombre, String destino, Transporte medioDeTransporte, Hospedaje hospedaje, List<GuiaTuristico> excursiones, Double precio, Integer MaxPaq) {
         setNombre(nombre);
         setDestino(destino);
         setMedioDeTransporte(medioDeTransporte);
         setHospedaje(hospedaje);
         setExcursiones(excursiones);
         setPrecio(precio);
+        setMaxPaq(MaxPaq);
     }
 
-    public Paquete (String nombre, String destino, Proveedor medioDeTransporte, Proveedor hospedaje, Proveedor excursion, Double precio) {
+    public Paquete (String nombre, String destino, Transporte medioDeTransporte, Hospedaje hospedaje, GuiaTuristico excursion, Double precio, Integer MaxPaq) {
         setNombre(nombre);
         setDestino(destino);
         setMedioDeTransporte(medioDeTransporte);
@@ -30,6 +33,7 @@ public class Paquete {
         this.excursiones = new ArrayList<>();
         addExcursiones(excursion);
         setPrecio(precio);
+        setMaxPaq(MaxPaq);
     }
 
     public String getCodigo () {
@@ -61,33 +65,28 @@ public class Paquete {
         return medioDeTransporte;
     }
 
-    public void setMedioDeTransporte (Proveedor medioDeTransporte) {
-        if (medioDeTransporte.getClasificacion().equals(Proveedor.Clasificacion.MEDIOS_DE_TRANSPORTE))
-            this.medioDeTransporte = medioDeTransporte;
+    public void setMedioDeTransporte (Transporte medioDeTransporte) {
+        this.medioDeTransporte = medioDeTransporte;
     }
 
     public Proveedor getHospedaje () {
         return hospedaje;
     }
 
-    public void setHospedaje (Proveedor hospedaje) {
-        if (hospedaje.getClasificacion().equals(Proveedor.Clasificacion.HOSPEDAJES))
-            this.hospedaje = hospedaje;
+    public void setHospedaje (Hospedaje hospedaje) {
+        this.hospedaje = hospedaje;
     }
 
-    public List<Proveedor> getExcursiones () {
+    public List<GuiaTuristico> getExcursiones () {
         return excursiones;
     }
 
-    public void setExcursiones (List<Proveedor> excursiones) {
-        for (Proveedor auxiliar : excursiones)
-            if (auxiliar.getClasificacion().equals(Proveedor.Clasificacion.EXCURSIONES))
-                this.excursiones.add(auxiliar);
+    public void setExcursiones (List<GuiaTuristico> excursiones) {
+        this.excursiones.addAll(excursiones);
     }
 
-    public void addExcursiones (Proveedor excursion) {
-        if (excursion.getClasificacion().equals(Proveedor.Clasificacion.EXCURSIONES))
-            excursiones.add(excursion);
+    public void addExcursiones (GuiaTuristico excursion) {
+        excursiones.add(excursion);
     }
 
     @Override
@@ -101,6 +100,26 @@ public class Paquete {
     }
 
     public void setPrecio (Double precio) {
-        this.precio = precio;           //
+        this.precio = precio;
+    }
+
+    public Double calcularPrecioFinal () {
+        this.precioFinal = precio + medioDeTransporte.calcularValorExtra(precio, MaxPaq) + hospedaje.calcularValorExtra(precio, MaxPaq);
+        for (GuiaTuristico guia : excursiones) {
+            this.precioFinal += guia.calcularValorExtra(MaxPaq);
+        }
+        return precioFinal;
+    }
+
+    public Double getPrecioFinal() {
+        return precioFinal;
+    }
+
+    public void setMaxPaq(Integer maxPaq) {
+        MaxPaq = maxPaq;
+    }
+
+    public Integer setMaxPaq() {
+        return MaxPaq;
     }
 }

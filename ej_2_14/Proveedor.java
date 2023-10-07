@@ -1,19 +1,10 @@
 package ar.edu.unlu.poo.ej214;
 
-public class Proveedor {
-    private String nombre;
-    private String CUIT;
-    private String localizacion;
-    private Enum<Clasificacion> clasificacion;
-
-    public Proveedor (String nombre, String CUIT, String localizacion, Enum<Clasificacion> clasificacion) {
-        setNombre(nombre);
-        setNombre(CUIT);
-        setNombre(localizacion);
-        setClasificacion(clasificacion);
-    }
-
-    public enum Clasificacion {MEDIOS_DE_TRANSPORTE, HOSPEDAJES, EXCURSIONES}
+public abstract class Proveedor {
+    protected String nombre;
+    protected String CUIT;
+    protected String localizacion;
+    protected Integer MinProv = 0;
 
     public String getNombre () {
         return nombre;
@@ -39,16 +30,16 @@ public class Proveedor {
         this.localizacion = localizacion;
     }
 
-    public Enum<Clasificacion> getClasificacion () {
-        return clasificacion;
+    public Integer getMinProv() {
+        return MinProv;
     }
 
-    public void setClasificacion (Enum<Clasificacion> clasificacion) {
-        this.clasificacion = clasificacion;
+    public void setMinProv(Integer minProv) {
+        MinProv = minProv;
     }
 
     @Override
     public String toString () {
-        return CUIT + " - " + nombre + " - " + clasificacion.toString() + " - " + localizacion;
+        return CUIT + " - " + nombre + " - " + localizacion;
     }
 }
