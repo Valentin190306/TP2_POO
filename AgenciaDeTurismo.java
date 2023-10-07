@@ -46,7 +46,8 @@ al valor total que cobra el proveedor por sus servicios según la cantidad de cl
           supere la cantidad mínima de clientes que acepte el proveedor.
         * Si la cantidad máxima del paquete es igual a la mínima del proveedor (MaxPaq = MinProv), el valor extra es $0.
         * Si la cantidad máxima del paquete es menor (MaxPaq < MinProv) a la mínima del proveedor, el valor extra es $0.
-        * El de transporte lo calcula así: Por cada cliente, se agrega un precio extra de 0.3% del precio base por los
+
+    2 - El de transporte lo calcula así: Por cada cliente, se agrega un precio extra de 0.3% del precio base por los
           servicios de catering durante el viaje.
 
     2 - El guía turístico nunca agrega valor extra, salvo que la cantidad de clientes sea mayor a 200, en ese caso solo
@@ -75,17 +76,17 @@ Actividades
 public class AgenciaDeTurismo {
     public static void main (String[] args) {
 
-        Proveedor excursion = new Proveedor("Summer","1234", "123 Santa Street", Proveedor.Clasificacion.EXCURSIONES);
-        Proveedor transporte = new Proveedor("Metrobus", "32145", "San Justo y Belgrano", Proveedor.Clasificacion.MEDIOS_DE_TRANSPORTE);
-        Proveedor hospedaje = new Proveedor("Los Telmos", "456456", "123 Corrientes", Proveedor.Clasificacion.HOSPEDAJES);
+        GuiaTuristico excursion = new GuiaTuristico("Summer","1234", "123 Santa Street");
+        Transporte transporte = new Transporte("Metrobus", "32145", "San Justo y Belgrano", 4);
+        Hospedaje hospedaje = new Hospedaje("Los Telmos", "456456", "123 Corrientes", 4);
+
+        Paquete paquete1 = new Paquete("Paquete1", "Pehuajo", transporte, hospedaje, excursion, 10000.0, 4);
+        Paquete paquete2 = new Paquete("Paquete2", "Montevideo", transporte, hospedaje, excursion, 15000.0, 4);
+        Paquete paquete3 = new Paquete("Paquete3", "Montevideo", transporte, hospedaje, excursion, 12000.0, 4);
+        Paquete paquete4 = new Paquete("Paquete4", "Cordoba", transporte, hospedaje, excursion, 20000.0, 4);
+        Paquete paquete5 = new Paquete("Paquete5", "Bariloche", transporte, hospedaje, excursion, 10000.0, 4);
 
         List<Paquete> paquetesDelCliente = new ArrayList<>();
-
-        Paquete paquete1 = new Paquete("Paquete1", "Pehuajo", transporte, hospedaje, excursion, 10000.);
-        Paquete paquete2 = new Paquete("Paquete2", "Montevideo", transporte, hospedaje, excursion, 15000.);
-        Paquete paquete3 = new Paquete("Paquete3", "Montevideo", transporte, hospedaje, excursion, 12000.);
-        Paquete paquete4 = new Paquete("Paquete4", "Cordoba", transporte, hospedaje, excursion, 20000.);
-        Paquete paquete5 = new Paquete("Paquete5", "Bariloche", transporte, hospedaje, excursion, 10000.);
 
         paquetesDelCliente.add(paquete1);
         paquetesDelCliente.add(paquete2);
@@ -110,5 +111,11 @@ public class AgenciaDeTurismo {
             System.out.println(venta.toString() + " - Destino: " + venta.getPaquete().getDestino());
 
         System.out.println("\n> El destino mas popular: " + sistema.destinoPopular());
+
+        sistema.altaDeProveedor(excursion);
+        sistema.altaDeProveedor(transporte);
+        sistema.altaDeProveedor(hospedaje);
+
+        System.out.println(sistema.resumenDeProveedores());
     }
 }
